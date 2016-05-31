@@ -1,0 +1,70 @@
+@model Bewander.Models.SearchViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+@foreach (var item in Model.user)
+{
+   
+    var profileURL = "../../Images/UserProfiles/no-image.png";
+
+    
+    <div id="Add" class="SearchedResults">
+        <div class="ListItem" style="visibility: hidden; position: absolute;">@Html.DisplayFor(modelItem => item.UserID)</div>
+        <div class="SearchPic"><img src="@profileURL" class="img-thumbnail" alt="" /></div>
+        <div class="SearchedNames">
+            @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
+        </div>
+        
+    </div>
+
+
+}
+@foreach (var item in Model.place)
+{
+    <div id="Add" class="SearchedResults2">
+        <div class="ListItem2" style="visibility: hidden; position: absolute;">@Html.DisplayFor(modelItem => item.PlaceID)</div>
+        @*@foreach (var i in Model.review)
+        {
+            <div class="ListItem2" style="visibility: hidden; position: absolute;">@Html.DisplayFor(modelItem => i.GoogleID)</div>
+        }*@
+        <div class="SearchedNames">
+            @Html.DisplayFor(modelItem=>item.Name)
+            
+        </div>
+    </div>
+    
+}
+
+
+
+<script>
+    //Change CSS on hover
+    $("div.SearchedResults").hover(
+        function () {$(this).css("opacity", "1")},
+        function () { $(this).css("opacity", ".8") }
+    );
+
+    //Go to Profile page on click
+    $('div.SearchedResults').click(function () {
+        var text = $(this).children(".ListItem").text();
+        var url = '/UserProfiles/VisitProfile?userID=' + text;
+        window.location.href = url;
+    });
+    //Change CSS on hover for place search
+    $("div.SearchedResults2").hover(
+        function () { $(this).css("opacity", "1") },
+        function () { $(this).css("opacity", ".8") }
+    );
+
+    //Go to Reviews page on click
+    $('div.SearchedResults2').click(function () {
+        var text1 = $(this).children(".ListItem2").text();
+        var url = '/Reviews/GetReviews?placeID=' + text1;
+        window.location.href = url;
+    });
+</script>
+
+

@@ -1,0 +1,13 @@
+public PartialViewResult SearchItems(string term)
+        {
+            
+            var searchViews = new SearchViewModel();
+            searchViews.user = db.Users.Where(x => (x.FirstName + " " + x.LastName).Contains(term)).ToList();
+            searchViews.place = db.Places.Where(x => (x.Name).Contains(term)).ToList();
+            foreach(var item in searchViews.place)
+            {
+                searchViews.review = db.Reviews.Where(x => (x.PlaceID == item.PlaceID)).ToList();
+            }
+            
+            return PartialView("SearchItems",searchViews);
+        }

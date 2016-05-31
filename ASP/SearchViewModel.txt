@@ -1,0 +1,8 @@
+public class SearchViewModel
+    {
+        public List<User> user { get; set; }
+
+        public List<Place> place { get; set; }
+
+        public List<Review> review { get; set; }
+    }

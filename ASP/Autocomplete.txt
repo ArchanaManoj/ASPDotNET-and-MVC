@@ -1,0 +1,47 @@
+<script>
+    $(document).ready(function () {
+        $('#textsearch').autocomplete({
+            source: '@Url.Action("GetCountries")',
+            focus:function(event,ui){
+                $("#textsearch").val(ui.item.val);
+                return false;
+            },
+            
+            select :function(event,ui){
+                $("#textsearch").val(ui.item.CountryID);
+                $("#idstate").removeAttr("disabled");
+                $("#idstate").focus();
+                var c = ui.item.label;
+                var d = ui.item.id;
+                $("#idstate").val(c+d);
+
+            },
+            
+        });
+        
+
+    })
+</script>
+
+
+
+var list = (from i in db.countries
+                        where ((i.CountryName.StartsWith(term)))
+                        select new
+                        {
+                            value = i.CountryName,
+                            id = i.CountryId
+                           }).OrderBy(i => i.value);
+
+            return Json(list, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+
+
+
+
+
+
+
